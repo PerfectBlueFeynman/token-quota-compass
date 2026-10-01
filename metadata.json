@@ -1,0 +1,10 @@
+{
+  "uuid": "token-quota-compass@meleager.github.io",
+  "name": "Token Quota Compass",
+  "description": "Discover local AI coding providers and show their quota windows in the GNOME panel. Requires the separately installed CodexBar CLI. The menu can copy the CLI installation command to the clipboard.",
+  "shell-version": [
+    "50"
+  ],
+  "settings-schema": "org.gnome.shell.extensions.token-quota-compass",
+  "url": "https://github.com/PerfectBlueFeynman/token-quota-compass"
+}

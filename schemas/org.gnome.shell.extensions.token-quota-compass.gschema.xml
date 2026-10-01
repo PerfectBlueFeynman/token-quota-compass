@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.token-quota-compass" path="/org/gnome/shell/extensions/token-quota-compass/">
+    <key name="refresh-minutes" type="i">
+      <default>15</default>
+      <range min="2" max="120"/>
+      <summary>Minutes between quota refreshes</summary>
+    </key>
+    <key name="extra-providers" type="s">
+      <default>''</default>
+      <summary>Additional CodexBar provider IDs separated by commas</summary>
+    </key>
+    <key name="show-remaining" type="b">
+      <default>true</default>
+      <summary>Show remaining quota instead of consumed quota</summary>
+    </key>
+    <key name="show-sources-in-bar" type="b">
+      <default>true</default>
+      <summary>Show selected sources in the top bar</summary>
+    </key>
+    <key name="show-all-sources" type="b">
+      <default>false</default>
+      <summary>Show every selected source in the top bar</summary>
+    </key>
+    <key name="hidden-providers" type="as">
+      <default>[]</default>
+      <summary>Discovered providers hidden from usage queries and the panel</summary>
+    </key>
+    <key name="panel-position" type="s">
+      <choices>
+        <choice value="left"/>
+        <choice value="center-left"/>
+        <choice value="center-right"/>
+        <choice value="right"/>
+      </choices>
+      <default>'center-left'</default>
+      <summary>Position in the GNOME top bar</summary>
+    </key>
+  </schema>
+</schemalist>
