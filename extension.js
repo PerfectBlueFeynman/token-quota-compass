@@ -11,7 +11,7 @@ import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
 import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
 import {discoverProviders, findCli} from './discovery.js';
 import {queryProvider} from './client.js';
-import {featuredWindow} from './normalize.js';
+import {featuredWindow, resetText} from './normalize.js';
 
 const NAMES = {codex: 'Codex', claude: 'Claude', opencode: 'OpenCode',
     opencodego: 'OpenCode Go', gemini: 'Gemini', copilot: 'Copilot'};
@@ -42,13 +42,6 @@ function panelExtraText(value) {
     return `+${symbols[match[2]]}${match[1]}`;
 }
 
-function resetText(value) {
-    if (!value)
-        return '';
-    const date = new Date(value);
-    return Number.isNaN(date.getTime()) ? '' : `Resets ${date.toLocaleString()}`;
-}
-
 export default class TokenQuotaCompass extends Extension {
     enable() {
         this._settings = this.getSettings();
@@ -75,6 +68,17 @@ export default class TokenQuotaCompass extends Extension {
         this._results = new Map();
         this._cancellable = null;
         this._timer = 0;
+        this._resetLabels = [];
+        this._countdownTimer = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT,
+            60, () => {
+                this._updateResetLabels();
+                return GLib.SOURCE_CONTINUE;
+            });
+        this._menuOpenId = this._indicator.menu.connect('open-state-changed',
+            (_menu, isOpen) => {
+                if (isOpen)
+                    this._updateResetLabels();
+            });
         this._signalIds = [
             this._settings.connect('changed::refresh-minutes', () => this._schedule()),
             this._settings.connect('changed::extra-providers', () => this._refresh()),
@@ -121,6 +125,11 @@ export default class TokenQuotaCompass extends Extension {
         if (this._timer)
             GLib.Source.remove(this._timer);
         this._timer = 0;
+        if (this._countdownTimer)
+            GLib.Source.remove(this._countdownTimer);
+        this._countdownTimer = 0;
+        this._indicator.menu.disconnect(this._menuOpenId);
+        this._menuOpenId = 0;
         for (const id of this._signalIds || [])
             this._settings.disconnect(id);
         this._signalIds = [];
@@ -130,6 +139,7 @@ export default class TokenQuotaCompass extends Extension {
         this._menuHeader = null;
         this._menuScroll = null;
         this._settings = null;
+        this._resetLabels = null;
         this._results = null;
         this._providers = null;
         this._cli = null;
@@ -191,6 +201,7 @@ export default class TokenQuotaCompass extends Extension {
         if (!this._indicator)
             return;
         this._panel.destroy_all_children();
+        this._resetLabels = [];
         this._indicator.menu.removeAll();
         this._shownChips = 0;
         this._hiddenChips = 0;
@@ -339,8 +350,16 @@ export default class TokenQuotaCompass extends Extension {
         track.add_child(new St.Widget({width: Math.max(0, trackWidth - width), height: 5}));
         card.add_child(track);
         const reset = resetText(window.resetsAt);
-        if (reset)
-            card.add_child(new St.Label({text: reset, style_class: 'tqc-reset'}));
+        if (reset) {
+            const label = new St.Label({text: reset, style_class: 'tqc-reset-time'});
+            card.add_child(label);
+            this._resetLabels.push({label, value: window.resetsAt});
+        }
+    }
+
+    _updateResetLabels() {
+        for (const {label, value} of this._resetLabels)
+            label.text = resetText(value);
     }
 
     _renderExtra(card, row) {

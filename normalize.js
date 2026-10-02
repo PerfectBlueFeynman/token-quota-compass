@@ -120,3 +120,22 @@ export function shortName(id) {
         gemini: 'Gm', copilot: 'Cp', cursor: 'Cu'};
     return known[id] || id.slice(0, 2).toUpperCase();
 }
+
+export function resetText(value, now = Date.now()) {
+    if (!value)
+        return '';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime()))
+        return '';
+    const when = date.toLocaleString(undefined, {
+        month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit',
+    });
+    const minutesLeft = Math.ceil((date.getTime() - now) / 60000);
+    if (minutesLeft <= 0)
+        return `Reset due · ${when}`;
+    const hours = Math.floor(minutesLeft / 60);
+    const minutes = minutesLeft % 60;
+    const left = hours > 0
+        ? `${hours}h${minutes ? ` ${minutes}m` : ''}` : `${minutes}m`;
+    return `Resets in ${left} · ${when}`;
+}

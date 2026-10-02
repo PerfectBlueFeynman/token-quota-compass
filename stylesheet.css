@@ -61,6 +61,7 @@
 .tqc-fill { background-color: #8aadf4; border-radius: 3px; }
 .tqc-fill-over { background-color: #ed8796; border-radius: 3px; }
 .tqc-reset { color: #9199aa; font-size: 10px; padding-top: 4px; }
+.tqc-reset-time { color: #b7c8ef; font-size: 10px; padding-top: 5px; }
 .tqc-section-label { color: #9fa9c2; font-size: 9px; font-weight: 800; padding-top: 13px; }
 .tqc-extra-line { padding-top: 7px; }
 .tqc-extra-label { color: #bdc4d2; font-size: 11px; }
