@@ -183,9 +183,14 @@ export default class TokenQuotaCompass extends Extension {
                             id: provider, account: '', windows: [], error: 'No accounts',
                         }]);
                 } catch (_error) {
-                    if (generation === this._generation)
+                    if (generation === this._generation) {
+                        const messages = {
+                            CLAUDE_LOGIN_REQUIRED: 'Claude signed out · run claude auth login',
+                            CLAUDE_SOURCE_UNAVAILABLE: 'Claude source unavailable · check Claude login',
+                        };
                         this._results.set(provider, [{id: provider, account: '',
-                            windows: [], error: 'Usage unavailable'}]);
+                            windows: [], error: messages[_error.code] || 'Usage unavailable'}]);
+                    }
                 }
                 if (generation === this._generation)
                     this._render();

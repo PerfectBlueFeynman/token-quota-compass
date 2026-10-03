@@ -3,7 +3,7 @@
 // and can maintain this code.
 import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
-import {normalizeResult} from './normalize.js';
+import {normalizeResult, usageErrorCode} from './normalize.js';
 
 async function run(cli, provider, cancellable, allAccounts, source) {
     const flags = Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE;
@@ -35,7 +35,9 @@ async function run(cli, provider, cancellable, allAccounts, source) {
             const entry = Array.isArray(json) ? json[0] : json;
             if (allAccounts && entry?.error?.message?.includes('No token accounts configured'))
                 return null;
-            throw new Error('Usage query failed');
+            const error = new Error('Usage query failed');
+            error.code = usageErrorCode(provider, entry?.error?.message);
+            throw error;
         }
         return normalizeResult(provider, json);
     } finally {

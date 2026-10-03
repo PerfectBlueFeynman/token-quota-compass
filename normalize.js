@@ -139,3 +139,13 @@ export function resetText(value, now = Date.now()) {
         ? `${hours}h${minutes ? ` ${minutes}m` : ''}` : `${minutes}m`;
     return `Resets in ${left} · ${when}`;
 }
+
+export function usageErrorCode(provider, message) {
+    if (provider !== 'claude' || typeof message !== 'string')
+        return 'UNAVAILABLE';
+    if (/Claude OAuth access token missing|not logged in/i.test(message))
+        return 'CLAUDE_LOGIN_REQUIRED';
+    if (/No available fetch strategy for claude/i.test(message))
+        return 'CLAUDE_SOURCE_UNAVAILABLE';
+    return 'UNAVAILABLE';
+}

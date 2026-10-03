@@ -11,6 +11,8 @@ git clone https://github.com/PerfectBlueFeynman/token-quota-compass.git "$HOME/.
 glib-compile-schemas --strict "$HOME/.local/share/gnome-shell/extensions/token-quota-compass@meleager.github.io/schemas"
 ```
 
+Claude usage requires a working Claude authentication source in CodexBar. If its card says the Claude source is unavailable, check `claude auth status` and run `claude auth login` if signed out.
+
 Log out and back in, then enable `token-quota-compass@meleager.github.io` in GNOME Extensions or run `gnome-extensions enable token-quota-compass@meleager.github.io`. Open Settings to choose the panel position and sources. GNOME 50 is the version tested for this package.
 
 To update later, run `git pull` in the cloned extension directory, then log out and back in.
@@ -19,4 +21,4 @@ To update later, run `git pull` in the cloned extension directory, then log out 
 
 Copy your existing `*-symbolic.svg` files privately into `media/logos/` in this checkout. The recognized provider filenames are listed in `LOGOS` at the top of `extension.js`. Copy the accompanying attribution file as `NOTICE`. Log out and back in to load the icons. Both `media/logos/` and `NOTICE` are excluded by `.gitignore`; keep them out of the public repository. Third-party logos need rights-holder permission before public redistribution.
 
-This extension uses GPL-3.0-or-later. It is not yet approved for upload to extensions.gnome.org: its public project URL and maintainer review still need to be completed.
+This extension uses GPL-3.0-or-later. It is not yet approved for upload to extensions.gnome.org: maintainer review and UUID namespace ownership still need to be resolved.
