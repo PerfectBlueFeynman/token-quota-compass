@@ -58,6 +58,7 @@
 .tqc-window-value { color: #f3f4fa; font-size: 11px; font-weight: 700; }
 .tqc-value-over { color: #ed8796; font-size: 11px; font-weight: 700; }
 .tqc-meter { background-color: rgba(145, 155, 180, 0.2); border-radius: 3px; margin-top: 4px; }
+.tqc-meter-over { background-color: rgba(237, 135, 150, 0.22); }
 .tqc-fill { background-color: #8aadf4; border-radius: 3px; }
 .tqc-fill-over { background-color: #ed8796; border-radius: 3px; }
 .tqc-reset { color: #9199aa; font-size: 10px; padding-top: 4px; }

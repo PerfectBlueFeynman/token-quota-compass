@@ -1,6 +1,6 @@
 # Token Quota Compass
 
-A GNOME Shell 50 extension showing local AI provider quota usage. It needs the separately installed [CodexBar CLI](https://github.com/steipete/CodexBar/blob/main/docs/cli.md). The menu shows hours and minutes until each reported quota reset, alongside the local reset time. This repository contains no provider logos; generic icons are shown by default.
+A GNOME Shell 50 extension showing local AI provider quota usage. It needs the separately installed [CodexBar CLI](https://github.com/steipete/CodexBar/blob/main/docs/cli.md). The panel shows the quota window with the least capacity left, so an exhausted 5-hour session displays 0% even if weekly quota remains. The menu shows each window separately, and its progress bars follow the used/remaining setting. It also shows hours and minutes until each reported quota reset, alongside the local reset time. This repository contains no provider logos; generic icons are shown by default.
 
 ## Install from this repository
 

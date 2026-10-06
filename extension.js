@@ -348,11 +348,18 @@ export default class TokenQuotaCompass extends Extension {
             style_class: window.used > 100 ? 'tqc-value-over' : 'tqc-window-value'}));
         card.add_child(line);
         const trackWidth = 300;
-        const track = new St.BoxLayout({style_class: 'tqc-meter', width: trackWidth});
-        const width = Math.round(Math.min(100, window.used) / 100 * trackWidth);
-        track.add_child(new St.Widget({width: Math.max(1, width), height: 5,
-            style_class: window.used > 100 ? 'tqc-fill-over' : 'tqc-fill'}));
-        track.add_child(new St.Widget({width: Math.max(0, trackWidth - width), height: 5}));
+        const track = new St.BoxLayout({
+            style_class: window.used > 100 ? 'tqc-meter tqc-meter-over' : 'tqc-meter',
+            width: trackWidth,
+        });
+        const displayed = window.used > 100 ? 100 : remaining
+            ? Math.max(0, 100 - window.used) : Math.min(100, window.used);
+        const width = Math.round(displayed / 100 * trackWidth);
+        if (width > 0)
+            track.add_child(new St.Widget({width, height: 5,
+                style_class: window.used > 100 ? 'tqc-fill-over' : 'tqc-fill'}));
+        if (width < trackWidth)
+            track.add_child(new St.Widget({width: trackWidth - width, height: 5}));
         card.add_child(track);
         const reset = resetText(window.resetsAt);
         if (reset) {

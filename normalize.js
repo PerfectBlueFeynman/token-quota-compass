@@ -111,8 +111,8 @@ export function normalizeResult(provider, json) {
 export function featuredWindow(windows) {
     if (!windows?.length)
         return null;
-    return windows.find(window => /week|7.day/i.test(window.name) ||
-        window.minutes >= 9000 && window.minutes <= 11000) || windows[0];
+    return windows.reduce((tightest, window) =>
+        window.used > tightest.used ? window : tightest);
 }
 
 export function shortName(id) {
