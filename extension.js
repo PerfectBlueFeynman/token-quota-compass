@@ -346,10 +346,11 @@ export default class TokenQuotaCompass extends Extension {
         line.add_child(new St.Label({text: percentText(window, remaining),
             style_class: window.used > 100 ? 'tqc-value-over' : 'tqc-window-value'}));
         card.add_child(line);
-        const trackWidth = 300;
+        const trackWidth = 330;
         const track = new St.BoxLayout({
             style_class: window.used > 100 ? 'tqc-meter tqc-meter-over' : 'tqc-meter',
             width: trackWidth,
+            x_align: Clutter.ActorAlign.START,
         });
         const displayed = quotaDisplayPercent(window, remaining);
         const width = Math.round(displayed / 100 * trackWidth);
