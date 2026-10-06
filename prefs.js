@@ -26,8 +26,8 @@ export default class TokenQuotaCompassPreferences extends ExtensionPreferences {
 
         const group = new Adw.PreferencesGroup({title: 'Usage'});
         page.add(group);
-        const remaining = new Adw.SwitchRow({title: 'Show remaining quota',
-            subtitle: 'Turn off to show used quota'});
+        const remaining = new Adw.SwitchRow({title: 'Show Left instead of Used',
+            subtitle: 'On: Left · Off: Used · applies to percentages and bars'});
         settings.bind('show-remaining', remaining, 'active', 0);
         group.add(remaining);
 

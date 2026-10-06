@@ -11,7 +11,7 @@ import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
 import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
 import {discoverProviders, findCli} from './discovery.js';
 import {queryProvider} from './client.js';
-import {featuredWindow, resetText} from './normalize.js';
+import {featuredWindow, quotaDisplayPercent, resetText} from './normalize.js';
 
 const NAMES = {codex: 'Codex', claude: 'Claude', opencode: 'OpenCode',
     opencodego: 'OpenCode Go', gemini: 'Gemini', copilot: 'Copilot'};
@@ -24,14 +24,13 @@ const LOGO_ALIASES = {openai: 'codex', 'azure-openai': 'codex',
 function percentText(window, remaining) {
     if (window.used > 100)
         return `+${Math.round(window.used - 100)}% over`;
-    const value = remaining ? 100 - window.used : window.used;
-    return `${Math.round(value)}%`;
+    return `${quotaDisplayPercent(window, remaining)}%`;
 }
 
 function panelPercentText(window, remaining) {
     if (window.used > 100)
         return `+${Math.round(window.used - 100)}%`;
-    return `${Math.round(remaining ? 100 - window.used : window.used)}%`;
+    return `${quotaDisplayPercent(window, remaining)}%`;
 }
 
 function panelExtraText(value) {
@@ -352,8 +351,7 @@ export default class TokenQuotaCompass extends Extension {
             style_class: window.used > 100 ? 'tqc-meter tqc-meter-over' : 'tqc-meter',
             width: trackWidth,
         });
-        const displayed = window.used > 100 ? 100 : remaining
-            ? Math.max(0, 100 - window.used) : Math.min(100, window.used);
+        const displayed = quotaDisplayPercent(window, remaining);
         const width = Math.round(displayed / 100 * trackWidth);
         if (width > 0)
             track.add_child(new St.Widget({width, height: 5,

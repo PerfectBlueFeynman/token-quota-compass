@@ -115,6 +115,11 @@ export function featuredWindow(windows) {
         window.used > tightest.used ? window : tightest);
 }
 
+export function quotaDisplayPercent(window, remaining) {
+    const value = remaining ? 100 - window.used : window.used;
+    return Math.round(Math.max(0, Math.min(100, value)));
+}
+
 export function shortName(id) {
     const known = {codex: 'Cx', claude: 'Cl', opencode: 'OC', opencodego: 'OG',
         gemini: 'Gm', copilot: 'Cp', cursor: 'Cu'};
