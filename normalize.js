@@ -94,6 +94,25 @@ export function normalizeResult(provider, json) {
             return [{name, used, resetsAt: raw.resetsAt || raw.resets_at || null,
                 minutes: Number.isFinite(minutes) ? minutes : 0, tier}];
         });
+        if (Array.isArray(usage.extraRateWindows)) {
+            for (const extra of usage.extraRateWindows) {
+                if (!extra || typeof extra !== 'object' || extra.usageKnown === false ||
+                    extra.window?.usageKnown === false)
+                    continue;
+                const used = percent(extra.window);
+                if (used === null)
+                    continue;
+                const raw = extra.window;
+                const minutes = Number(raw.windowMinutes ?? raw.window_minutes ?? 0);
+                windows.push({
+                    name: String(extra.title || extra.id || 'Additional quota'),
+                    used,
+                    resetsAt: raw.resetsAt || raw.resets_at || null,
+                    minutes: Number.isFinite(minutes) ? minutes : 0,
+                    tier: String(extra.id || 'extra'),
+                });
+            }
+        }
         const identity = usage.accountEmail || usage.email || entry.accountLabel ||
             entry.account || entry.accountName || '';
         const account = typeof identity === 'string' ? identity : '';
