@@ -1,6 +1,6 @@
 # Token Quota Compass
 
-A GNOME Shell 50 extension showing local AI provider quota usage. It needs the separately installed [CodexBar CLI](https://github.com/steipete/CodexBar/blob/main/docs/cli.md). The panel shows the quota window with the least capacity left, so an exhausted 5-hour session displays 0% even if weekly quota remains. In Settings, the **Show Left instead of Used** switch changes the top bar percentages, menu percentages, and progress bars together. The menu also shows hours and minutes until each reported quota reset, alongside the local reset time. This repository contains no provider logos; generic icons are shown by default.
+A GNOME Shell 50 and 51 extension showing local AI provider quota usage. It needs the separately installed [CodexBar CLI](https://github.com/steipete/CodexBar/blob/main/docs/cli.md). The panel shows the quota window with the least capacity left, so an exhausted 5-hour session displays 0% even if weekly quota remains. In Settings, the **Show Left instead of Used** switch changes the top bar percentages, menu percentages, and progress bars together. The menu also shows hours and minutes until each reported quota reset, alongside the local reset time. This repository contains no provider logos; generic icons are shown by default.
 
 ## Install from this repository
 
@@ -13,7 +13,7 @@ glib-compile-schemas --strict "$HOME/.local/share/gnome-shell/extensions/token-q
 
 Claude usage requires a working Claude authentication source in CodexBar. If its card says the Claude source is unavailable, check `claude auth status` and run `claude auth login` if signed out.
 
-Log out and back in, then enable `token-quota-compass@meleager.github.io` in GNOME Extensions or run `gnome-extensions enable token-quota-compass@meleager.github.io`. Open Settings to choose the panel position and sources. GNOME 50 is the version tested for this package.
+Log out and back in, then enable `token-quota-compass@meleager.github.io` in GNOME Extensions or run `gnome-extensions enable token-quota-compass@meleager.github.io`. Open Settings to choose the panel position and sources. GNOME 50 and 51 are tested for this package.
 
 To update later, run `git pull` in the cloned extension directory, then log out and back in.
 

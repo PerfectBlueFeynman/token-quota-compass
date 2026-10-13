@@ -47,9 +47,9 @@ export default class TokenQuotaCompass extends Extension {
         this._indicator = new PanelMenu.Button(0.0, 'Token Quota Compass');
         this._indicator.menu.box.add_style_class_name('tqc-menu');
         this._indicator.menu._boxPointer.bin.set_child(null);
-        this._menuShell = new St.BoxLayout({vertical: true,
+        this._menuShell = new St.BoxLayout({orientation: Clutter.Orientation.VERTICAL,
             style_class: 'tqc-menu-shell'});
-        this._menuHeader = new St.BoxLayout({vertical: true,
+        this._menuHeader = new St.BoxLayout({orientation: Clutter.Orientation.VERTICAL,
             style_class: 'tqc-header'});
         this._menuShell.add_child(this._menuHeader);
         this._menuScroll = new St.ScrollView({style_class: 'tqc-menu-scroll',
@@ -306,7 +306,8 @@ export default class TokenQuotaCompass extends Extension {
     _renderAccount(provider, account, remaining) {
         const item = new PopupMenu.PopupBaseMenuItem({reactive: false});
         item.add_style_class_name('tqc-card-item');
-        const card = new St.BoxLayout({vertical: true, style_class: 'tqc-card',
+        const card = new St.BoxLayout({orientation: Clutter.Orientation.VERTICAL,
+            style_class: 'tqc-card',
             x_expand: true});
         item.add_child(card);
         const title = new St.BoxLayout({style_class: 'tqc-card-title'});
