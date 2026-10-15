@@ -84,7 +84,14 @@ export function normalizeResult(provider, json) {
         const usage = entry.usage && typeof entry.usage === 'object' ? entry.usage : {};
         const labels = entry.rateWindowLabels && typeof entry.rateWindowLabels === 'object'
             ? entry.rateWindowLabels : {};
-        const windows = TIERS.flatMap(tier => {
+        const hasAntigravitySummary = provider === 'antigravity' &&
+            Array.isArray(usage.extraRateWindows) &&
+            usage.extraRateWindows.some(extra =>
+                typeof extra?.id === 'string' &&
+                extra.id.startsWith('antigravity-quota-summary-') &&
+                extra.usageKnown !== false && extra.window?.usageKnown !== false &&
+                percent(extra.window) !== null);
+        const windows = (hasAntigravitySummary ? [] : TIERS).flatMap(tier => {
             const raw = usage[tier];
             const used = percent(raw);
             if (used === null)
@@ -98,6 +105,10 @@ export function normalizeResult(provider, json) {
             for (const extra of usage.extraRateWindows) {
                 if (!extra || typeof extra !== 'object' || extra.usageKnown === false ||
                     extra.window?.usageKnown === false)
+                    continue;
+                if (hasAntigravitySummary &&
+                    (typeof extra.id !== 'string' ||
+                     !extra.id.startsWith('antigravity-quota-summary-')))
                     continue;
                 const used = percent(extra.window);
                 if (used === null)

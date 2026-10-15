@@ -14,7 +14,8 @@ import {queryProvider} from './client.js';
 import {featuredWindow, quotaDisplayPercent, resetText} from './normalize.js';
 
 const NAMES = {codex: 'Codex', claude: 'Claude', opencode: 'OpenCode',
-    opencodego: 'OpenCode Go', gemini: 'Gemini', copilot: 'Copilot'};
+    opencodego: 'OpenCode Go', gemini: 'Gemini', antigravity: 'Antigravity',
+    copilot: 'Copilot'};
 const LOGOS = new Set(['antigravity', 'claude', 'codex', 'copilot',
     'deepseek', 'gemini', 'mistral', 'ollama', 'opencode', 'opencodego',
     'openrouter', 'perplexity']);

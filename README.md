@@ -13,7 +13,7 @@ glib-compile-schemas --strict "$HOME/.local/share/gnome-shell/extensions/token-q
 
 Claude usage requires a working Claude authentication source in CodexBar. If its card says the Claude source is unavailable, check `claude auth status` and run `claude auth login` if signed out.
 
-Log out and back in, then enable `token-quota-compass@meleager.github.io` in GNOME Extensions or run `gnome-extensions enable token-quota-compass@meleager.github.io`. Open Settings to choose the panel position and sources. GNOME 50 and 51 are tested for this package.
+Log out and back in, then enable `token-quota-compass@meleager.github.io` in GNOME Extensions or run `gnome-extensions enable token-quota-compass@meleager.github.io`. Open Settings to choose the panel position and sources. A local Antigravity CLI (`agy`) profile is detected automatically, with measured Gemini and Claude/GPT quota windows shown separately. GNOME 50 and 51 are tested for this package.
 
 To update later, run `git pull` in the cloned extension directory, then log out and back in.
 

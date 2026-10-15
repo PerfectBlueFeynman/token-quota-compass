@@ -63,8 +63,12 @@ export function discoverProviders(extra = '') {
         ids.add('claude');
     if (exists('.config/opencode') || exists('.local/share/opencode'))
         ids.add('opencode');
-    if (exists('.config/gemini') || exists('.gemini'))
+    if (exists('.config/gemini') || exists('.gemini/settings.json') ||
+        exists('.gemini/oauth_creds.json'))
         ids.add('gemini');
+    if (exists('.gemini/antigravity-cli') || exists('.local/bin/agy') ||
+        GLib.find_program_in_path('agy'))
+        ids.add('antigravity');
     for (const id of extra.split(/[\s,]+/).filter(Boolean))
         add(ids, id.toLowerCase());
     return [...ids];
